@@ -5,8 +5,8 @@ import re
 import time
 
 base_url = "https://habr.com/ru/companies/bothub/news/"
-output_folder = "files"
-index_file = "index.txt"
+output_folder = "homework1/files"
+index_file = "homework1/index.txt"
 max_pages = 150
 
 os.makedirs(output_folder, exist_ok=True)
@@ -70,7 +70,7 @@ def crawl_habr_news(base_url, max_pages):
                 continue
 
             cleaned_html = clean_html(html)
-            file_name = f"выкачка_{page_count + 1}.txt"
+            file_name = f"{page_count + 1}.txt"
             file_path = os.path.join(output_folder, file_name)
 
             with open(file_path, "w", encoding="utf-8") as output:
