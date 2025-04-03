@@ -29,11 +29,11 @@ def clean_text(html_content):
 #токенезация
 def tokenize_text(text):
     tokens = word_tokenize(text, language="russian")
-    filtered_tokens=[]
+    filtered_tokens = set()
     for token in tokens:
         if token not in stop_words:
-            filtered_tokens.append(token)
-    return filtered_tokens
+            filtered_tokens.add(token)
+    return list(filtered_tokens)
 
 #лемматизация
 def lemmatize_tokens(tokens):
