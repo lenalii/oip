@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            font-weight: normal;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            width: 50%;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 20px 0 0 20px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-left: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 0 20px 20px 0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .results {
+            width: 60%;
+            margin: 30px auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .result-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-item:first-child {
+    padding-top: 0px;
+}
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .filename {
+            font-weight: bold;
+        }
+
+        .meta {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        .meta a {
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .meta a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+     <h1>Поиск</h1>
+    <form method="get" action="/search">
+        <input type="text" name="q" placeholder="Введите запрос" value="{{ request.args.get('q', '') }}" required>
+        <button type="submit">Поиск</button>
+    </form>
+     {% if results is defined %}
+        <div class="results">
+            {% if results %}
+                <ul>
+                    {% for item in results %}
+                        <li class="result-item">
+                            <div class="filename">{{ item.filename }}</div>
+                            <div class="meta">
+                                📥 <a href="{{ item.download_url }}">Скачать</a> |
+                                🌐 <a href="{{ item.url }}" target="_blank">Открыть сайт</a> |
+                                🔎 Релевантность: {{ item.relevance }}
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Ничего не найдено.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+</body>
+</html>
